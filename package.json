@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "reco_luan",
   "engines": {
-    "node": "16.13.0"
+    "node": "16.20.2"
   },
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",

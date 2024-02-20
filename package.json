@@ -10,5 +10,8 @@
     "vuepress": "1.9.7",
     "vuepress-theme-reco": "1.6.17"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "moment": "^2.30.1"
+  }
 }

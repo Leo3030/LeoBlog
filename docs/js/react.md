@@ -12,3 +12,12 @@
   - **通用性：** React基于虚拟Dom来进行操作UI，所以可以在各种平台运行，比如说ios/android，小程序等等
 - React的缺点：
   - 作为一个视图层的框架，React并没有提供一套完整的大型应用的解决方案。比如说页面的router，server等，需要依赖别的解决方案，比如说express..js或者next.js等等
+
+## React为什么要用JSX 
+
+### 官方定义
+JSX是JS的语法拓展，或者是一个类似于XML的es语法拓展
+
+::: tip
+React官方并不强制使用JSX，也可以使用React.createElement来实现同样的功能，但是使用JSX的写法会比直接使用createElement更加简单，易读，JSX最后会通过babel转换成createElement，所以JSX更像是createElement的语法糖
+:::

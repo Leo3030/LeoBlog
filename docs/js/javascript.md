@@ -75,7 +75,9 @@ typeof function () {}; // 'function'
   {} instanceof Object; //true
   function () {} instanceof Function; //true
 ```
-#### 手写instanceof
-```js
 
+#### 手写 instanceof
+
+```js
+1;
 ```

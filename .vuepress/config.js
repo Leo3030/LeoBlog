@@ -87,11 +87,11 @@ module.exports = {
     searchMaxSuggestions: 10,
     lastUpdated: "Last Updated",
     author: "Leo Tang",
-    authorAvatar: "/avatar.png",
+    authorAvatar: "/avatar.jpg",
     record: "xxxx",
-    startYear: "2017",
+    startYear: "2024",
   },
   markdown: {
     lineNumbers: true,
-  }
+  },
 };

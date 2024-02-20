@@ -21,3 +21,23 @@ JSX是JS的语法拓展，或者是一个类似于XML的es语法拓展
 ::: tip
 React官方并不强制使用JSX，也可以使用React.createElement来实现同样的功能，但是使用JSX的写法会比直接使用createElement更加简单，易读，JSX最后会通过babel转换成createElement，所以JSX更像是createElement的语法糖
 :::
+
+### 其他方案
+  - 模版
+  - 模版字符串
+
+### 生命周期
+  - 挂载
+    - constructor （严格来说这个不算React的生命周期，这个是类的构造函数）
+    - UNSAFE_componentWillMount (弃用)
+    - componentDidMount (组件完成挂载是触发，适合写一些初始化异步调用后台数据的逻辑)
+  - 更新
+    - componentWillReceiveProps （弃用）
+    - componentWShouldUpdate （更新前出发，能够阻止更新，节省不必要额资源，是优化的方向之一）
+  - 卸载
+    - componentWillMount （在组件卸载的时候触发，可以用于删除事件等操作）
+  - 异常
+    - componentCatchError（用于处理因为js出错而导致的白屏问题）
+
+### 如何避免生命周期中的坑
+  - 已经移除的生命周期状态需要做逻辑的

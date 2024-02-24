@@ -155,7 +155,7 @@ function deepCopy(obj) {
 这只是简单的 deepCopy 实际工作中会遇到各种复杂的情况，比如说 有 symbol 属性，function 属性，对象自己的循环调用等等，推荐使用成熟的第三方插件来实现该功能，比如说 lodash 之类的
 :::
 
-### 组件的通讯方式有哪些
+## 组件的通讯方式有哪些
 
 - 父与子通信：利用 props 传入子组件
 - 子与父通信：通过 callback 的形式，在子组件里调用父组件传入的 callback 来实现
@@ -280,9 +280,113 @@ obj.__proto__.constructor === "object";
 variable !== null && typeof variable === "object";
 ```
 
-## Set/Map是什么
-- `Set`是ES6新增的，用于存储值，`Set`的值具有唯一性，通过add的方式添加，delete的当时删除
-- `Map`同样是ES6新增的，用于存储键值对，通过 `set()`，`get()`的方式存储和获取，其中`Map`的`key`具有唯一性
+## Set/Map 是什么
+
+- `Set`是 ES6 新增的，用于存储值，`Set`的值具有唯一性，通过 add 的方式添加，delete 的当时删除
+- `Map`同样是 ES6 新增的，用于存储键值对，通过 `set()`，`get()`的方式存储和获取，其中`Map`的`key`具有唯一性
 
 ## 如何让改变函数的上下文
-可以使用`apply`，`call`来改变函数的上下文，这两个都是用来改变this的指向，apply第二个参数是一个数组，call则是多个参数
+
+可以使用`apply`，`call`来改变函数的上下文，这两个都是用来改变 this 的指向，apply 第二个参数是一个数组，call 则是多个参数
+
+## `useCallback()`，`useMemo()`
+
+- `useCallback()` 缓存一个方法，两个参数，第一个参数是`func`， 第二参数是`dependence`
+- `useMemo()` 缓存一个值，两个参数，第一个参数是`value`, 第二个参数是`dependence`
+- `useCallback()`需要配合`memo`使用，因为组件`render`的时候会重新创建`func`，
+  每次 func 的索引都会改变，使用`useCallback()`能缓存这个方法，让组件可以缓存住
+
+```js
+import {useCallBack,memo} from 'react';
+/**父组件**/
+const Parent = () => {
+    const [parentState,setParentState] = useState(0);  //父组件的state
+
+    //需要传入子组件的函数
+    const toChildFun = useCallBack(() => {
+        console.log("需要传入子组件的函数");
+        ...
+    },[])
+
+    return (<div>
+          <Button onClick={() => setParentState(val => val+1)}>
+              点击我改变父组件中与Child组件无关的state
+          </Button>
+          //将父组件的函数传入子组件
+          <Child fun={toChildFun}></Child>
+    <div>)
+}
+
+/**被memo保护的子组件**/
+const Child = memo(() => {
+    consolo.log("我被打印了就说明子组件重新构建了")
+    return <div><div>
+})
+```
+
+## useRef
+
+`useRef`的主要用法包括：
+
+- 访问 DOM 元素：通过将 ref 属性赋值为 useRef 创建的 ref 对象，可以轻松地访问和操作 DOM 元素。
+
+```js
+mport React, { useRef } from 'react';
+
+function MyComponent() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+- 保存组件之间的状态：通过 ref 对象，在组件之间共享和保持状态，而无需触发重新渲染。
+
+```js
+import React, { useRef } from 'react';
+
+function MyComponent() {
+  const sharedData = useRef({ count: 0 });
+
+  const incrementCount = () => {
+    sharedData.current.count++;
+    console.log(sharedData.current.count);
+  };
+
+  return (
+    <div>
+      <button onClick={incrementCount}>Increment Count</button>
+    </div>
+  );
+```
+
+- 保存定时器或其他引用：可以使用 useRef 来保存定时器、WebSocket 连接等引用，以便在组件卸载时清除这些引用。
+
+```js
+import React, { useRef, useEffect } from "react";
+
+function MyComponent() {
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      console.log("Timer is running");
+    }, 1000);
+
+    return () => {
+      clearInterval(timerRef.current);
+    };
+  }, []);
+
+  return <div>Timer Component</div>;
+}
+```

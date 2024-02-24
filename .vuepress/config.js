@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   title: "Leo's Blog",
   description: "",
@@ -88,10 +90,21 @@ module.exports = {
     lastUpdated: "Last Updated",
     author: "Leo Tang",
     authorAvatar: "/avatar.jpg",
-    record: "xxxx",
     startYear: "2024",
   },
   markdown: {
     lineNumbers: true,
+  },
+  chainWebpack: (config) => {
+    config.module
+      .rule("images")
+      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+      .use("url-loader")
+      .loader("url-loader")
+      .options({
+        limit: 8192,
+        name: "images/[name].[hash:8].[ext]",
+      })
+      .end();
   },
 };

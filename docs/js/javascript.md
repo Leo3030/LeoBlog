@@ -542,7 +542,8 @@ bar("Hello"); // Cell 18 Hello
   - `then()`返回一个新的 Promise 对象，所以可以进行链式调用
 - `Promise`的`catch()`方法用于捕获错误，相当于`then(null, onRejected)`，它返回一个新的`Promise`对象，所以可以进行链式调用
 - `Promise`的`finally()`方法用于指定不管`Promise`对象最后状态如何，都会执行的操作，他返回一个新的`Promise`对象，所以可以进行链式调用
-- `Promise`的`all()`方法用于将多个`Promise`实例包装成一个新的`Promise`实例
+- `Promise`的`all()`方法用于将多个`Promise`实例包装成一个新的`Promise`实例，只要有一个`Promise`失败了，就算失败。
+- `Promise`的`allSettled()`方法可以将多个`Promise`结果执行完之后返回（无论成功失败）
 
 ### `Promise`的缺点
 
